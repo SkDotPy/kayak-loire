@@ -3,41 +3,86 @@ require_once '../config.php';
 require_once '../includes/db.php';
 require_once '../includes/functions.php';
 
-$page_title = 'Vérification email';
+$page_title = 'Inscription';
 
-$message = '';
-$success = false;
+// Variables pour conserver les valeurs du formulaire
+$email = '';
+$nom = '';
+$prenom = '';
+$telephone = '';
+$errors = [];
 
-// Vérifier si un token est fourni
-if (isset($_GET['token']) && !empty($_GET['token'])) {
-    $token = clean($_GET['token']);
+// Traitement du formulaire
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupérer et nettoyer les données
+    $email = clean($_POST['email']);
+    $password = $_POST['password'];
+    $password_confirm = $_POST['password_confirm'];
+    $nom = clean($_POST['nom']);
+    $prenom = clean($_POST['prenom']);
+    $telephone = clean($_POST['telephone']);
     
-    // Chercher l'utilisateur avec ce token
-    $user = query("SELECT id, email, email_verified FROM users WHERE verification_token = ?", [$token]);
-    
-    if (!empty($user)) {
-        $user = $user[0];
-        
-        // Vérifier si l'email n'est pas déjà vérifié
-        if ($user['email_verified'] == 0) {
-            // Activer le compte
-            $result = execute("UPDATE users SET email_verified = 1, verification_token = NULL WHERE id = ?", [$user['id']]);
-            
-            if ($result) {
-                $message = "Votre adresse email a été vérifiée avec succès ! Vous pouvez maintenant vous connecter.";
-                $success = true;
-            } else {
-                $message = "Une erreur est survenue lors de la vérification de votre email.";
-            }
-        } else {
-            $message = "Votre email a déjà été vérifié. Vous pouvez vous connecter.";
-            $success = true;
-        }
-    } else {
-        $message = "Le lien de vérification est invalide ou a expiré.";
+    // Validation
+    if (empty($email)) {
+        $errors[] = "L'email est obligatoire.";
+    } elseif (!isValidEmail($email)) {
+        $errors[] = "L'email n'est pas valide.";
     }
-} else {
-    $message = "Aucun token de vérification fourni.";
+    
+    if (empty($password)) {
+        $errors[] = "Le mot de passe est obligatoire.";
+    } elseif (!isValidPassword($password)) {
+        $errors[] = "Le mot de passe doit contenir au moins " . PASSWORD_MIN_LENGTH . " caractères.";
+    }
+    
+    if ($password !== $password_confirm) {
+        $errors[] = "Les mots de passe ne correspondent pas.";
+    }
+    
+    if (empty($nom)) {
+        $errors[] = "Le nom est obligatoire.";
+    }
+    
+    if (empty($prenom)) {
+        $errors[] = "Le prénom est obligatoire.";
+    }
+    
+    // Vérifier si l'email existe déjà
+    if (empty($errors)) {
+        $existing_user = query("SELECT id FROM users WHERE email = ?", [$email]);
+        if (!empty($existing_user)) {
+            $errors[] = "Cette adresse email est déjà utilisée.";
+        }
+    }
+    
+    // Si pas d'erreurs, créer le compte
+    if (empty($errors)) {
+        // Hasher le mot de passe
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        
+        // Générer un token de vérification
+        $verification_token = bin2hex(random_bytes(32));
+        
+        // Insérer l'utilisateur
+        $sql = "INSERT INTO users (email, password, nom, prenom, telephone, verification_token, role, email_verified, created_at) 
+                VALUES (?, ?, ?, ?, ?, ?, 'client', 0, NOW())";
+        
+        $result = execute($sql, [$email, $password_hash, $nom, $prenom, $telephone, $verification_token]);
+        
+        if ($result) {
+            // Envoyer l'email de vérification
+            $verification_link = SITE_URL . "/auth/verify-email.php?token=" . $verification_token;
+            
+            // Stocker le lien pour l'afficher (uniquement pour tests)
+            $_SESSION['verification_link'] = $verification_link;
+            $_SESSION['verification_email'] = $email;
+            
+            // Rediriger vers une page qui affiche le lien
+            redirect(SITE_URL . '/auth/email-sent.php');
+        } else {
+            $errors[] = "Une erreur est survenue lors de la création du compte.";
+        }
+    }
 }
 
 include '../includes/header.php';
@@ -45,20 +90,62 @@ include '../includes/header.php';
 
 <div class="auth-container">
     <div class="container">
-        <div class="auth-box text-center">
-            <h2>Vérification de votre email</h2>
+        <div class="auth-box">
+            <h2>Créer un compte</h2>
+            <p class="auth-subtitle">Rejoignez-nous pour réserver votre aventure sur la Loire</p>
             
-            <?php if ($success): ?>
-                <div class="alert alert-success">
-                    <?php echo $message; ?>
-                </div>
-                <a href="<?php echo SITE_URL; ?>/auth/login.php" class="btn btn-primary">Se connecter</a>
-            <?php else: ?>
+            <?php if (!empty($errors)): ?>
                 <div class="alert alert-error">
-                    <?php echo $message; ?>
+                    <ul>
+                        <?php foreach($errors as $error): ?>
+                            <li><?php echo $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
                 </div>
-                <a href="<?php echo SITE_URL; ?>/auth/register.php" class="btn btn-primary">Créer un nouveau compte</a>
             <?php endif; ?>
+            
+            <form method="POST" action="" class="auth-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prenom">Prénom *</label>
+                        <input type="text" id="prenom" name="prenom" value="<?php echo htmlspecialchars($prenom); ?>" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nom">Nom *</label>
+                        <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($nom); ?>" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telephone">Téléphone</label>
+                    <input type="tel" id="telephone" name="telephone" value="<?php echo htmlspecialchars($telephone); ?>" placeholder="06 12 34 56 78">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required>
+                        <small>Au moins <?php echo PASSWORD_MIN_LENGTH; ?> caractères</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password_confirm">Confirmer le MDP</label>
+                        <input type="password" id="password_confirm" name="password_confirm" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Créer mon compte</button>
+            </form>
+            
+            <div class="auth-footer">
+                <p>Vous avez déjà un compte ? <a href="<?php echo SITE_URL; ?>/auth/login.php">Se connecter</a></p>
+            </div>
         </div>
     </div>
 </div>
