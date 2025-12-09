@@ -1,0 +1,102 @@
+/* ======================================
+   RESPONSIVE DESIGN
+   ====================================== */
+
+/* Tablettes (max 1024px) */
+@media (max-width: 1024px) {
+    .hero h1 {
+        font-size: 42px;
+    }
+    
+    .stats-grid,
+    .steps-grid,
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .packs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile (max 768px) */
+@media (max-width: 768px) {
+    /* Header mobile */
+    .header-content {
+        flex-wrap: wrap;
+    }
+    
+    .main-nav {
+        display: none;
+        width: 100%;
+        order: 3;
+    }
+    
+    .main-nav.active {
+        display: block;
+    }
+    
+    .main-nav ul {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .main-nav a {
+        display: block;
+        padding: var(--spacing-sm);
+        border-bottom: 1px solid var(--light-gray);
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    /* Hero */
+    .hero {
+        height: 400px;
+    }
+    
+    .hero h1 {
+        font-size: 32px;
+    }
+    
+    .hero p {
+        font-size: 18px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+    }
+    
+    /* Grilles en 1 colonne */
+    .stats-grid,
+    .steps-grid,
+    .packs-grid,
+    .features-grid,
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Petit mobile (max 480px) */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 24px;
+    }
+    
+    .hero p {
+        font-size: 16px;
+    }
+    
+    section h2 {
+        font-size: 28px;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
