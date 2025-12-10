@@ -22,3 +22,4 @@ session_destroy();
 header('Location: ../auth/login.php?logout=success');
 exit();
 ?>
+

@@ -1,0 +1,428 @@
+/* ======================================
+   STYLES ADMIN
+   ====================================== */
+.admin-container {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--light-gray);
+    min-height: calc(100vh - 200px);
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.admin-header h1 {
+    font-size: 36px;
+    color: var(--dark);
+    margin-bottom: var(--spacing-xs);
+}
+
+.admin-header p {
+    color: var(--gray);
+    font-size: 18px;
+}
+
+/* Statistiques admin */
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Menu de navigation admin */
+.admin-menu {
+    margin-bottom: var(--spacing-xl);
+}
+
+.admin-menu h2 {
+    text-align: left;
+    margin-bottom: var(--spacing-lg);
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--spacing-md);
+}
+
+.menu-card {
+    background-color: var(--white);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.menu-icon {
+    width: 48px;
+    height: 48px;
+    background-color: var(--light-gray);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-sm);
+    color: var(--primary-color);
+}
+
+.menu-card h3 {
+    font-size: 16px;
+    margin-bottom: var(--spacing-xs);
+    color: var(--dark);
+}
+
+.menu-card p {
+    color: var(--gray);
+    font-size: 13px;
+}
+
+/* Activité récente */
+.recent-activity {
+    background-color: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.recent-activity h2 {
+    margin-bottom: var(--spacing-md);
+    text-align: left;
+}
+
+.activity-info p {
+    color: var(--gray);
+    margin: var(--spacing-xs) 0;
+}
+
+.activity-info strong {
+    color: var(--primary-color);
+    font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .menu-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-stats,
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ======================================
+   PAGES ADMIN - LAYOUT
+   ====================================== */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+/* ======================================
+   TABLEAUX ADMIN
+   ====================================== */
+.table-container {
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table thead {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.admin-table th {
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid var(--light-gray);
+    transition: background-color 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.admin-table td {
+    padding: var(--spacing-md);
+    font-size: 14px;
+}
+
+.admin-table td.actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+/* Badges */
+.badge {
+    padding: 4px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.badge-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.badge-info {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+/* Boutons petits */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+.btn-danger {
+    background-color: var(--error-color);
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+/* État vide dans les listes */
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.empty-state p {
+    color: var(--gray);
+    margin-bottom: var(--spacing-md);
+    font-size: 16px;
+}
+
+/* Responsive tableaux */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .admin-table {
+        font-size: 12px;
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        padding: var(--spacing-sm);
+    }
+    
+    .admin-table td.actions {
+        flex-direction: column;
+    }
+}
+
+/* ======================================
+   FORMULAIRES ADMIN
+   ====================================== */
+.form-container {
+    background-color: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.admin-form .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.admin-form label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.admin-form input[type="text"],
+.admin-form input[type="email"],
+.admin-form input[type="number"],
+.admin-form input[type="tel"],
+.admin-form input[type="date"],
+.admin-form input[type="file"],
+.admin-form textarea,
+.admin-form select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.admin-form input:focus,
+.admin-form textarea:focus,
+.admin-form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.admin-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.admin-form small {
+    display: block;
+    margin-top: var(--spacing-xs);
+    color: var(--gray);
+    font-size: 13px;
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--light-gray);
+}
+
+/* Checkboxes */
+.admin-form input[type="checkbox"] {
+    width: auto;
+    margin-right: var(--spacing-xs);
+}
+
+/* Responsive formulaires */
+@media (max-width: 768px) {
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+/* ======================================
+   PAGE DE CONFIRMATION DE SUPPRESSION
+   ====================================== */
+.confirmation-box {
+    background-color: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.confirmation-box .alert {
+    margin-bottom: var(--spacing-lg);
+}
+
+.confirmation-box .alert h3,
+.confirmation-box .alert h4 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--dark);
+}
+
+.confirmation-box .alert ul {
+    list-style: disc;
+    margin-left: 20px;
+    margin-top: var(--spacing-sm);
+}
+
+.confirmation-box .alert li {
+    margin: 5px 0;
+}
+
+.alert-warning {
+    background-color: #fef3c7;
+    border-left: 4px solid var(--accent-color);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+}
+
+.etape-info {
+    background-color: var(--light-gray);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.etape-info h4 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.etape-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.etape-info li {
+    padding: var(--spacing-xs) 0;
+    color: var(--gray);
+}
+
+.current-image {
+    margin-top: var(--spacing-md);
+}
+
+.current-image p {
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+}

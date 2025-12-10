@@ -10,7 +10,7 @@ $page_title = 'Mon tableau de bord';
 
 // Récupérer les informations de l'utilisateur
 $user_id = $_SESSION['user_id'];
-$user = query("SELECT * FROM users WHERE id = ?", [$user_id]);
+$user = query("SELECT * FROM users WHERE id = ?", [$user_id]); 
 
 if (empty($user)) {
     redirect(SITE_URL . '/auth/logout.php');

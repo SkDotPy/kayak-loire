@@ -52,18 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['user_prenom'] = $user['prenom'];
                     $_SESSION['user_role'] = $user['role'];
                     
-                    // Si "Se souvenir de moi", créer un cookie (optionnel)
-                    if ($remember) {
-                        setcookie('user_remember', $user['id'], time() + (30 * 24 * 60 * 60), '/');
-                    }
-                    
                     setSuccessMessage("Bienvenue " . $user['prenom'] . " !");
                     
                     // Rediriger selon le rôle
                     if ($user['role'] === 'admin') {
                         redirect(SITE_URL . '/admin/index.php');
                     } else {
-                        redirect(SITE_URL . '/user/dashboard.php');
+                        redirect(SITE_URL . '/index.php');
                     }
                 }
             } else {
