@@ -426,3 +426,123 @@
     margin-bottom: var(--spacing-xs);
     font-weight: 600;
 }
+
+/* ======================================
+   FILTRES
+   ====================================== */
+.filters-box {
+    background-color: var(--white);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.filters-form {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--dark);
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+}
+
+.table-info {
+    margin-top: var(--spacing-md);
+    text-align: right;
+    color: var(--gray);
+    font-size: 14px;
+}
+
+/* Responsive filtres */
+@media (max-width: 768px) {
+    .filters-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    .filters-form .btn {
+        width: 100%;
+    }
+}
+/* ======================================
+   CHECKBOXES GRID
+   ====================================== */
+.checkboxes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background-color: var(--light-gray);
+    border-radius: var(--radius-md);
+}
+
+.checkboxes-grid label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-weight: 400;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    transition: background-color 0.2s ease;
+}
+
+.checkboxes-grid label:hover {
+    background-color: #e5e7eb;
+    border-radius: var(--radius-sm);
+}
+
+.checkboxes-grid input[type="checkbox"] {
+    width: auto;
+    cursor: pointer;
+}
+
+/* Titres de sections dans les formulaires */
+.admin-form h3 {
+    font-size: 18px;
+    color: var(--dark);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.admin-form h3:first-of-type {
+    margin-top: 0;
+}
+
+/* Responsive checkboxes */
+@media (max-width: 768px) {
+    .checkboxes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .checkboxes-grid {
+        grid-template-columns: 1fr;
+    }
+}
