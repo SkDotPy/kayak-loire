@@ -189,7 +189,7 @@ include '../../includes/header.php';
                     <div class="form-group">
                         <label for="duree_jours">Durée (jours) *</label>
                         <input type="number" id="duree_jours" name="duree_jours" value="<?php echo $duree_jours; ?>" min="1" max="30" required>
-                        <small>⚠️ Modifier la durée supprimera la composition actuelle</small>
+                        <small>Modifier la durée supprimera la composition actuelle</small>
                     </div>
 
                     <div class="form-group">
