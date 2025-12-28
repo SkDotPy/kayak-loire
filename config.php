@@ -22,7 +22,7 @@ if (!defined('DB_HOST')) {
     // ======================================
     // CONFIGURATION DU SITE
     // ======================================
-    define('SITE_URL', 'http://localhost/kayak-loire');
+    define('SITE_URL', 'http://http://51.178.44.228/');
     define('SITE_NAME', 'Kayak Loire');
     define('SITE_EMAIL', 'contact@kayak-loire.fr');
 
